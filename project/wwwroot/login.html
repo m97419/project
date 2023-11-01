@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <script src="login.js"></script>
+    <div id="login">
+        <input id="userName" /> name<br /><br />
+        <input id="userPassword" type="password"/> password<br /><br />
+        <button onclick="login()">to enter...</button><br /><br />
+    </div>
+    <a onclick="addUser()" >add user</a><br /><br />
+    <div id="register" style="visibility:hidden">
+        <input id="newUserName" /> name<br /><br />
+        <input id="newUserPassword" type="password" onchange="checkThePassword()"/> password  <br /><br />
+        <meter id="level" max="4"></meter><br /><br />
+        <input id="newUserFirstName" /> first name<br /><br />
+        <input id="newUserLastName" /> last name<br /><br />
+        <button onclick="regist()">OK</button>
+    </div>
+</body>
+</html>
