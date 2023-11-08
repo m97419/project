@@ -23,7 +23,7 @@ namespace Services
 
         public User addUser(User user)
         {
-            if (checkPassword(user.password) > 2)
+            if (checkPassword(user.Password) > 2)
             {
                 try
                 {

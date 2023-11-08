@@ -14,7 +14,7 @@ namespace Repositories
         {
             try
             {
-                user.id = System.IO.File.ReadLines(path).Count() + 1;
+                user.UserId = System.IO.File.ReadLines(path).Count() + 1;
                 string text = JsonSerializer.Serialize(user) + Environment.NewLine;
                 await System.IO.File.AppendAllTextAsync(path, text);
             }
@@ -35,7 +35,7 @@ namespace Repositories
                     while ((currentUserInFile = await reader.ReadLineAsync()) != null)
                     {
                         User user = JsonSerializer.Deserialize<User>(currentUserInFile);
-                        if (user.name == name && user.password == password)
+                        if (user.Email == name && user.Password == password)
                         {
                             return user;
                         }
@@ -60,7 +60,7 @@ namespace Repositories
                     while ((currentUserInFile = await reader.ReadLineAsync()) != null)
                     {
                         Entities.User apdateUser = JsonSerializer.Deserialize<Entities.User>(currentUserInFile);
-                        if (apdateUser.id == id)
+                        if (apdateUser.UserId == id)
                         {
                             textToReplace = currentUserInFile;
                             break;

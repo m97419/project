@@ -60,7 +60,7 @@ namespace project.Controllers
             {
                 throw;
             }
-            return CreatedAtAction(nameof(Get), new { id = user.id }, user);
+            return CreatedAtAction(nameof(Get), new { id = user.UserId }, user);
         }
 
         // PUT                                                                                                                                                                                                                                                               api/<UsersController>/5
