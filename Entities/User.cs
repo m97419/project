@@ -1,18 +1,19 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 
-namespace Entities
+namespace Entities;
+
+public partial class User
 {
-    public class User
-    {
-        public int id { get; set; }
-        [EmailAddress]
-        public string name { get; set; }
-        [StringLength(20)]
-        public string password { get; set; }
-        [StringLength(20)]
-        public string firstName { get; set; }
-        [StringLength(20)]
-        public string lastName { get; set; }
-    }
+    public int UserId { get; set; }
+
+    public string? Email { get; set; }
+
+    public string? FirstName { get; set; }
+
+    public string? LastName { get; set; }
+
+    public string? Password { get; set; }
+
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }
