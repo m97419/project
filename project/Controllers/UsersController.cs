@@ -17,6 +17,7 @@ namespace project.Controllers
             this.userServices = userServices;
         }
         //tytytytytytyyyyyyyyy
+        //jhjhjhjghgvhghghghghghgh
         // GET: api/<UsersController>
         [HttpGet]
         public ActionResult<Entities.User> Get([FromQuery] string name,[FromQuery] string password)
