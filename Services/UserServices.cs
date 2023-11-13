@@ -8,11 +8,11 @@ namespace Services
     public class UserServices : IUserServices
     {
 
-        Repositories.IUserRepository userRepository;
+        private Repositories.IUserRepository _userRepository;
 
         public UserServices(Repositories.IUserRepository userRepository)
         {
-            this.userRepository = userRepository;
+            this._userRepository = userRepository;
         }
 
         public int checkPassword(string password)
@@ -27,7 +27,7 @@ namespace Services
             {
                 try
                 {
-                    user = userRepository.addUser(user).Result;
+                    user = _userRepository.addUser(user).Result;
                 }
                 catch (Exception)
                 {
@@ -41,7 +41,7 @@ namespace Services
         {
             try
             {
-                User? user = userRepository.getUserByNameAndPassword(name, password).Result;
+                User? user = _userRepository.getUserByNameAndPassword(name, password).Result;
                 return user;
             }
             catch (Exception)
@@ -54,7 +54,7 @@ namespace Services
         {
             try
             {
-                userRepository.apdateUser(id, user);
+                _userRepository.apdateUser(id, user);
             }
             catch (Exception)
             {

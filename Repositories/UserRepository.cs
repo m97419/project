@@ -1,5 +1,6 @@
 ﻿
 using Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.IO;
 using System.Text.Json;
@@ -8,77 +9,30 @@ namespace Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private string path = "../users.txt";
+
+        private Store214364960Context _store214364960Context;
+
+        public UserRepository(Store214364960Context store214364960Context)
+        {
+            _store214364960Context = store214364960Context;
+        }
 
         public async Task<User> addUser(User user)
         {
-            try
-            {
-                user.UserId = System.IO.File.ReadLines(path).Count() + 1;
-                string text = JsonSerializer.Serialize(user) + Environment.NewLine;
-                await System.IO.File.AppendAllTextAsync(path, text);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            await _store214364960Context.AddAsync(user);
+            await _store214364960Context.SaveChangesAsync();
             return user;
         }
 
         public async Task<User?> getUserByNameAndPassword(string name, string password)
         {
-            try
-            {
-                using (StreamReader reader = System.IO.File.OpenText(path))
-                {
-                    string currentUserInFile;
-                    while ((currentUserInFile = await reader.ReadLineAsync()) != null)
-                    {
-                        User user = JsonSerializer.Deserialize<User>(currentUserInFile);
-                        if (user.Email == name && user.Password == password)
-                        {
-                            return user;
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            return null;
+            return await _store214364960Context.Users.Where(user => user.Email == name && user.Password == password).FirstOrDefaultAsync();
         }
 
         public async Task apdateUser(int id, User user)
         {
-            try
-            {
-                string textToReplace = string.Empty;
-                using (StreamReader reader = System.IO.File.OpenText(path))
-                {
-                    string currentUserInFile;
-                    while ((currentUserInFile = await reader.ReadLineAsync()) != null)
-                    {
-                        Entities.User apdateUser = JsonSerializer.Deserialize<Entities.User>(currentUserInFile);
-                        if (apdateUser.UserId == id)
-                        {
-                            textToReplace = currentUserInFile;
-                            break;
-                        }
-                    }
-                }
-                if (textToReplace != string.Empty)
-                {
-                    string text =await System.IO.File.ReadAllTextAsync(path);
-                    text = text.Replace(textToReplace, JsonSerializer.Serialize(user));
-                    await System.IO.File.WriteAllTextAsync(path, text);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
+            _store214364960Context.Users.Update(user);
+            await _store214364960Context.SaveChangesAsync();
         }
 
     }

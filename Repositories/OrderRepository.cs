@@ -1,0 +1,40 @@
+﻿using Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Repositories
+{
+    public class OrderRepository : IOrderRepository
+    {
+        private Store214364960Context _store214364960Context;
+
+        public OrderRepository(Store214364960Context store214364960Context)
+        {
+            _store214364960Context = store214364960Context;
+        }
+
+        public async Task<Order> addOrder(Order order)
+        {
+            await _store214364960Context.AddAsync(order);
+            await _store214364960Context.SaveChangesAsync();
+            return order;
+        }
+    }
+}
+//MySuperMarketContext _mySuperMarketContext;
+
+//public OrderRepository(MySuperMarketContext mySuperMarketContext)
+//{
+//    _mySuperMarketContext = mySuperMarketContext;
+//}
+//public async Task<Order> creatOrder(Order newOrder)
+//{
+//    await _mySuperMarketContext.AddAsync(newOrder);
+//    _mySuperMarketContext.SaveChangesAsync();
+//    return newOrder;
+
+
+//}

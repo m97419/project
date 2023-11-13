@@ -11,28 +11,22 @@ namespace project.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        Services.IUserServices userServices;
+        private Services.IUserServices _userServices;
         public UsersController(Services.IUserServices userServices)
         {
-            this.userServices = userServices;
+            _userServices = userServices;
         }
-        //tytytytytytyyyyyyyyy
-        //jhjhjhjghgvhghghghghghgh
+        
         // GET: api/<UsersController>
         [HttpGet]
         public ActionResult<Entities.User> Get([FromQuery] string name,[FromQuery] string password)
         {
             try
             {
-                Entities.User? user = userServices.getUserByNameAndPassword(name, password);
+                Entities.User? user = _userServices.getUserByNameAndPassword(name, password);
                 //if (user == null)
                 //{
                 //    return 
-
-
-
-
-
                 //}
                 return Ok(user);
             }
@@ -55,7 +49,7 @@ namespace project.Controllers
         {
             try
             {
-                user = userServices.addUser(user);
+                user = _userServices.addUser(user);
             }
             catch (Exception)
             {
@@ -68,7 +62,7 @@ namespace project.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] Entities.User user)
         {
-            userServices.apdateUser(id, user);
+            _userServices.apdateUser(id, user);
         }
 
         //// DELETE api/<UsersController>/5
@@ -81,7 +75,7 @@ namespace project.Controllers
         [HttpPost("{password}")]
         public ActionResult<int> Post(string password)
         {
-            int res = userServices.checkPassword(password);
+            int res = _userServices.checkPassword(password);
             return Ok(res);
         }
     }
