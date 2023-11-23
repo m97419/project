@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Entities;
+using Microsoft.AspNetCore.Mvc;
 using Repositories;
 using System.Text.Json;
 using System.Xml.Linq;
@@ -19,20 +20,16 @@ namespace project.Controllers
         
         // GET: api/<UsersController>
         [HttpGet]
-        public ActionResult<Entities.User> Get([FromQuery] string name,[FromQuery] string password)
+        public async Task<ActionResult<User>> Get([FromQuery] string name,[FromQuery] string password)
         {
             try
             {
-                Entities.User? user = _userServices.getUserByNameAndPassword(name, password);
-                //if (user == null)
-                //{
-                //    return 
-                //}
-                return Ok(user);
+                Entities.User? user = await _userServices.getUserByNameAndPasswordAsync(name, password);
+                return user != null? Ok(user): NoContent();
             }
             catch (Exception)
             {
-                return NoContent();
+                throw;
             }
         }
 
@@ -45,24 +42,24 @@ namespace project.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public ActionResult<Entities.User> Post([FromBody] Entities.User user)
+        public async Task<ActionResult<User>> Post([FromBody] User user)
         {
             try
             {
-                user = _userServices.addUser(user);
+                User newUser = await _userServices.addUserAsync(user);
+                return newUser != null? CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUser) : NoContent();
             }
             catch (Exception)
             {
                 throw;
             }
-            return CreatedAtAction(nameof(Get), new { id = user.UserId }, user);
         }
 
         // PUT                                                                                                                                                                                                                                                               api/<UsersController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Entities.User user)
+        public async Task Put(int id, [FromBody] Entities.User user)
         {
-            _userServices.apdateUser(id, user);
+            await _userServices.apdateUserAsync(id, user);
         }
 
         //// DELETE api/<UsersController>/5

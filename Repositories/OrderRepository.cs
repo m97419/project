@@ -24,17 +24,3 @@ namespace Repositories
         }
     }
 }
-//MySuperMarketContext _mySuperMarketContext;
-
-//public OrderRepository(MySuperMarketContext mySuperMarketContext)
-//{
-//    _mySuperMarketContext = mySuperMarketContext;
-//}
-//public async Task<Order> creatOrder(Order newOrder)
-//{
-//    await _mySuperMarketContext.AddAsync(newOrder);
-//    _mySuperMarketContext.SaveChangesAsync();
-//    return newOrder;
-
-
-//}

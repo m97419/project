@@ -36,7 +36,7 @@ const regist = async () => {
         alert("please enter your password")
     }
     else if (await getPasswordScore(password) > 2) {
-        const newUser = {
+        const user = {
             name: name,
             password: password,
             firstName: document.getElementById("newUserFirstName").value,
@@ -48,14 +48,14 @@ const regist = async () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(newUser)
+                body: JSON.stringify(user)
             })
             if (!res.ok) {
                 alert("sorry, we were an error")
             }
             else {
-                const user = await res.json()
-                alert(`${user.firstName} ${user.lastName} add succesfully!!`)
+                const afterUser = await res.json()
+                alert(`${afterUser.firstName} ${afterUser.lastName} add succesfully!!`)
             }
         }
         catch (ex) {

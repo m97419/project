@@ -17,10 +17,22 @@ namespace Repositories
         {
             _store214364960Context = store214364960Context;
         }
-
+        
         public async Task<IEnumerable<Product>> getAllProductsAsync()
         {
             return await _store214364960Context.Products.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Product>> getProductsByParams(int?[] categoriesId, string? desc, int? minPrice, int? maxPrice)
+        {
+            var query = _store214364960Context.Products.Where(product =>
+                (desc == null ? (true) : (product.Description.Contains(desc)))
+                && (minPrice == null ? (true) : (product.Price >= minPrice))
+                && (maxPrice == null ? (true) : (product.Price <= maxPrice))
+                && (categoriesId.Length == 0 ? (true) : (categoriesId.Contains(product.CategoryId))))
+                .OrderBy(product => product.Price);
+            List<Product> products = await query.ToListAsync();
+            return products;
         }
     }
 }

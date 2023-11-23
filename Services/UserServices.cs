@@ -21,13 +21,13 @@ namespace Services
             return result.Score;
         }
 
-        public User addUser(User user)
+        public async Task<User> addUserAsync(User user)
         {
             if (checkPassword(user.Password) > 2)
             {
                 try
                 {
-                    user = _userRepository.addUser(user).Result;
+                    user = await _userRepository.addUser(user);
                 }
                 catch (Exception)
                 {
@@ -37,11 +37,11 @@ namespace Services
             return user;
         }
 
-        public User? getUserByNameAndPassword(string name, string password)
+        public async Task<User?> getUserByNameAndPasswordAsync(string name, string password)
         {
             try
             {
-                User? user = _userRepository.getUserByNameAndPassword(name, password).Result;
+                User? user = await _userRepository.getUserByNameAndPassword(name, password);
                 return user;
             }
             catch (Exception)
@@ -50,11 +50,11 @@ namespace Services
             }
         }
 
-        public void apdateUser(int id, User user)
+        public async Task apdateUserAsync(int id, User user)
         {
             try
             {
-                _userRepository.apdateUser(id, user);
+                await _userRepository.apdateUser(id, user);
             }
             catch (Exception)
             {

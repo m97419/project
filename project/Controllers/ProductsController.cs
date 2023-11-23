@@ -19,11 +19,11 @@ namespace project.Controllers
 
         // GET: api/<ProductsController>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> Get()
+        public async Task<ActionResult<IEnumerable<Product>>> Get([FromQuery] int?[] categoriesId, string? desc, int? minPrice, int? maxPrice)
         {
             try
             {
-                IEnumerable<Product> products = await _productServices.getAllProducts();
+                IEnumerable<Product> products = await _productServices.getProductsByParams(categoriesId, desc, minPrice, maxPrice);
                 return Ok(products);
             }
             catch (Exception)
