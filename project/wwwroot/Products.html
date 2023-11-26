@@ -13,31 +13,31 @@
             <h1></h1>
             <p class="price"></p>
             <p class="description"></p>
-            <p><button>הוסף לסל</button></p>
+            <p><button>add to the bag</button></p>
         </div>
     </template>
     <template id="temp-category">
         <div class="cb checkbox">
-            <input type="checkbox" class="opt" id="" value="">
+            <input type="checkbox" class="opt" id="" value="" onchange="filterProducts()">
             <label for="">
                 <span class="OptionName"></span>
             </label>
         </div>
     </template>
 </head>
-<body>
+<body onload="showCategories(),filterProducts()">
     <header>
         <div class="bar">
             <section class="QuickLinks">
                 <ul>
                     <li class="" data-section="myAccount">
-                        <a href="#" title="כניסה לצפייה בפרטי החשבון" onclick="TrackLinkID(this);" accesskey="h">החשבון שלי</a>
+                        <a href="#" title="כניסה לצפייה בפרטי החשבון" onclick="TrackLinkID(this);" accesskey="h">my account</a>
                     </li>
                     <li>
-                        <a href="#" title="קניה מהירה">קניה מהירה</a>
+                        <a href="#" title="קניה מהירה">quick shopping</a>
                     </li>
                     <li>
-                        <a href="#" title="עזרה - שאלות נפוצות, כיצד לקנות באינטרנט, מדריך ועוד" target="_blank">עזרה</a>
+                        <a href="#" title="עזרה - שאלות נפוצות, כיצד לקנות באינטרנט, מדריך ועוד" target="_blank">help</a>
                     </li>
                 </ul>
             </section>
@@ -51,33 +51,29 @@
                 </a>
             </span>
             <div class="Checkout ">
-                <a class="goToCart" href="ShoppingBag.html">לקופה</a>
+                <a class="goToCart" href="ShoppingBag.html">to buy</a>
             </div>
         </div>
     </header>
     <div id="filters" class="Filters fixedVisible">
         <div class="ResultCount" style="position: absolute; top: 0px;">
-            <a class="Clear" href="">נקה הכל</a>
-            <div><span id="counter">  </span> מוצרים</div>
-            <div>
-                <span id="counter">
-                </span>
-            </div>
+            <a class="Clear" href="">clear all</a>
+            <div><span id="counter"> </span></div>
         </div>
         <div id="categoryList" class="filterBreak">
-            <span>בחירת קטגוריה</span>
+            <span>choose category</span>
         </div>
 
         <div id="nameFilter" class="nameFilter filterBreak">
 
-            <input type="text" id="nameSearch" class="floatRight" placeholder="חיפוש לפי שם מוצר">
+            <input type="text" id="nameSearch" class="floatRight" placeholder="search by product name">
 
             <button class="floatRight" tabindex="0" onclick="filterProducts()">
                 <span class="header42"><img src="./searchIcon.svg" alt="סמל חיפוש"></span>
             </button>
         </div>
         <div id="priceRangeFilter" class="filterBreak">
-            <div><span id="counter">  </span> מחיר:</div>
+            <div><span id="counter">  </span> price:</div>
 
             <input type="text" maxlength="9" id="minPrice" class="priceInputText">
             <span class="priceCurrency">₪</span>
@@ -100,5 +96,3 @@
     </div>
 </body>
 </html>
-
-<!--https://localhost:44344/Products.html#-->

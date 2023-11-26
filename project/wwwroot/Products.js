@@ -47,6 +47,7 @@ const getProducts = async (categoriesId, desc, minPrice, maxPrice) => {
 }
 
 const showProducts = (products) => {
+    document.getElementById("counter").innerText = products.length+" products"
     document.getElementById("PoductList").innerHTML = ""
     const tmpProduct = document.getElementById("temp-card")
     for (let i = 0; i < products.length; i++) {
@@ -55,6 +56,7 @@ const showProducts = (products) => {
         cln.querySelector("h1").innerText = products[i].categoryName
         cln.querySelector(".price").innerText = products[i].price + "$"
         cln.querySelector(".description").innerText = products[i].description
+        cln.querySelector("button").addEventListener('click', () => { addProductToBag(products[i]) })
         document.getElementById("PoductList").appendChild(cln)
     }
 }
@@ -74,5 +76,21 @@ const filterProducts = async () => {
     showProducts(products)
 }
 
-showCategories()
-filterProducts()
+const addProductToBag = (product) => {
+    document.getElementById("ItemsCountText").innerText++
+    if (!sessionStorage.getItem("myBag")) sessionStorage.setItem("myBag", "[]")
+    let bag = JSON.parse(sessionStorage.getItem("myBag"))
+    let flag = false
+    for (let p in bag) {
+        if (bag[p].productId == product.productId) {
+            bag[p].count++
+            flag = true
+            break
+        }
+    }
+    if (!flag) {
+        bag = [...bag, { ...product, count: 1 }]
+    }
+    myBag = JSON.stringify(bag)
+    sessionStorage.myBag = myBag
+}
