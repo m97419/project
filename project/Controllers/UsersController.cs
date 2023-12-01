@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using DTO;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Repositories;
 using System.Text.Json;
@@ -12,20 +13,24 @@ namespace project.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private Services.IUserServices _userServices;
-        public UsersController(Services.IUserServices userServices)
+        private readonly Services.IUserServices _userServices;
+        private readonly Services.IValidationService _validationService;
+
+        public UsersController(Services.IUserServices userServices, Services.IValidationService validationService)
         {
             _userServices = userServices;
+            _validationService = validationService;
         }
-        
+
         // GET: api/<UsersController>
-        [HttpGet]
-        public async Task<ActionResult<User>> Get([FromQuery] string name,[FromQuery] string password)
+        [HttpPost]
+        public async Task<ActionResult<UserDetailsDto>> POST([FromBody] UserLoginDto userLoginDto)
         {
             try
             {
-                Entities.User? user = await _userServices.getUserByNameAndPasswordAsync(name, password);
-                return user != null? Ok(user): NoContent();
+                User? user = await _userServices.getUserByNameAndPasswordAsync(userLoginDto.Email, userLoginDto.Password);
+                //parse to user details
+                return user != null ? Ok(user) : NoContent();
             }
             catch (Exception)
             {
@@ -42,17 +47,23 @@ namespace project.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public async Task<ActionResult<User>> Post([FromBody] User user)
+        public async Task<ActionResult<UserDetailsDto>> Post([FromBody] newUserDto user)
         {
             try
             {
                 User newUser = await _userServices.addUserAsync(user);
+                //parse to user details
                 return newUser != null? CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUser) : NoContent();
             }
             catch (Exception)
             {
                 throw;
             }
+        }
+
+        private object Get()
+        {
+            throw new NotImplementedException();
         }
 
         // PUT                                                                                                                                                                                                                                                               api/<UsersController>/5
@@ -67,13 +78,5 @@ namespace project.Controllers
         //public void Delete(int id)
         //{
         //}
-
-        // Post api/<UsersController>/5
-        [HttpPost("{password}")]
-        public ActionResult<int> Post(string password)
-        {
-            int res = _userServices.checkPassword(password);
-            return Ok(res);
-        }
     }
 }

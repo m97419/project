@@ -94,3 +94,13 @@ const addProductToBag = (product) => {
     myBag = JSON.stringify(bag)
     sessionStorage.myBag = myBag
 }
+
+const TrackLinkID = () => {
+    if (sessionStorage.getItem("user")) {
+        document.querySelector("#myAccount").href = './Update.html'
+    }
+    else {
+        document.querySelector("#myAccount").href = './login.html'
+    }
+}
+

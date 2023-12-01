@@ -1,4 +1,5 @@
 ﻿
+using DTO;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,7 +18,7 @@ namespace Repositories
             _store214364960Context = store214364960Context;
         }
 
-        public async Task<User> addUser(User user)
+        public async Task<UserDetailsDto> addUser(newUserDto user)
         {
             await _store214364960Context.AddAsync(user);
             await _store214364960Context.SaveChangesAsync();

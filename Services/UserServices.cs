@@ -1,4 +1,5 @@
 ﻿
+using DTO;
 using Entities;
 using System.IO;
 using System.Text.Json;
@@ -15,24 +16,15 @@ namespace Services
             this._userRepository = userRepository;
         }
 
-        public int checkPassword(string password)
+        public async Task<UserDetailsDto> addUserAsync(newUserDto user)
         {
-            var result = Zxcvbn.Core.EvaluatePassword(password);
-            return result.Score;
-        }
-
-        public async Task<User> addUserAsync(User user)
-        {
-            if (checkPassword(user.Password) > 2)
+            try
             {
-                try
-                {
-                    user = await _userRepository.addUser(user);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                user = await _userRepository.addUser(user);
+            }
+            catch (Exception)
+            {
+                throw;
             }
             return user;
         }

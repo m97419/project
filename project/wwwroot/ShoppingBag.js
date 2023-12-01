@@ -28,4 +28,46 @@ const deleteProduct = (product) => {
     sessionStorage.myBag = bag
 }
 
+const toDoOrder = async () => {
+    const user = sessionStorage.getItem("user")
+    if (!user) {
+        document.querySelector("#myAccount").href = 'wellcom.html'
+    }
+    const bag = JSON.parse(sessionStorage.getItem("bag"))
+    const order = {
+        orderDate: new Date(),
+        orderSum: 0,
+        userId: JSON.parse(user).userId,
+        orderItems: []
+    }
+    const sum = 0
+    for (let i = 0; i < bag.length; i++) {
+        order.orderItems.push({ Quantity: bag[i].count, ProductId: bag[i].productId })
+        sum += bag[i].price * bag[i].count
+    }
+    order.orderSum = sum
+    try {
+        const res = await fetch('api/Orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(order)
+        })
+        if (!res.ok) {
+            alert("sorry, we had an error, the order didn't complited")
+        }
+        else {
+            const afterOrder = await res.json()
+            alert(`the order complited succesfully!!`)
+            sessionStorage.myBag = "[]"
+            document.getElementById("todoOrder").style.visibility="hidden"
+        }
+    }
+    catch (ex) {
+        console.log(ex)
+    }
+}
+
+//in load
 showOrder()

@@ -1,18 +1,22 @@
 
-
 const login = async () => {
-    const userName = document.getElementById("userName").value
-    const userPassword = document.getElementById("userPassword").value
+    const userLogin = {
+        Email: document.getElementById("userName").value,
+        Password: document.getElementById("userPassword").value
+    }
     try {
-        const res = await fetch(`api/Users?name=${userName}&password=${userPassword}`)
-
-        if (!res.ok || res.status == 204) {
+        const res = await fetch(`api/Users`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userLogin)
+        })
+        if (!res.ok) {
             alert("the name isn't exist or the password is incorrect")
         }
         else {
             const user = await res.json()
             sessionStorage.setItem("user", JSON.stringify(user))
-            window.location.href = 'wellcom.html'
+            window.location.href = 'Products.html'
         }
     }
     catch (ex) {
@@ -37,21 +41,19 @@ const regist = async () => {
     }
     else if (await getPasswordScore(password) > 2) {
         const user = {
-            name: name,
-            password: password,
-            firstName: document.getElementById("newUserFirstName").value,
-            lastName: document.getElementById("newUserLastName").value
+            Email: name,
+            Password: password,
+            FirstName: document.getElementById("newUserFirstName").value,
+            LastName: document.getElementById("newUserLastName").value
         }
         try {
-            const res = await fetch('api/Users', {
+            const res = await fetch('api/Users',{
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(user)
             })
             if (!res.ok) {
-                alert("sorry, we were an error")
+                alert("sorry, we had an error")
             }
             else {
                 const afterUser = await res.json()
@@ -94,50 +96,5 @@ const getPasswordScore = async (password) => {
     }
     catch (ex) {
         console.log(ex)
-    }
-}
-
-
-const toUpdate = () => {
-    document.getElementById("updateDetails").style.visibility = "initial"
-}
-
-const update = async () => {
-    const userStr = sessionStorage.getItem("user")
-    const user = JSON.parse(userStr)
-    const userName = document.getElementById("newName").value
-    const password = document.getElementById("newPassword").value
-    const firstName = document.getElementById("newFirstName").value
-    const lastName = document.getElementById("newLastName").value
-    if (!password || !userName) {
-        alert("please enter name and password")
-    }
-    else {
-        if (await getPasswordScore(password) > 2) {
-            const updateUser = {
-                name: userName,
-                password: password,
-                firstName: firstName,
-                lastName: lastName
-            }
-            try {
-                const res = await fetch(`api/Users/${user.id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(updateUser)
-                })
-                if (!res.ok) {
-                    alert("sorry, we were an error")
-                }
-                else {
-                    alert(`the details update succesfully!!`)
-                }
-            }
-            catch (ex) {
-                console.log(ex)
-            }
-        }
     }
 }
