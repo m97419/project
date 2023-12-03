@@ -20,6 +20,7 @@ builder.Services.AddTransient<IProductServices, ProductServices>();
 builder.Services.AddTransient<IOrderServices, OrderServices>();
 
 builder.Services.AddDbContext<Store214364960Context>(option => option.UseSqlServer("Data Source=SRV2\\PUPILS;Initial Catalog=Store_214364960;Integrated Security=True"));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

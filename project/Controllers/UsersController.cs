@@ -1,4 +1,5 @@
-﻿using DTO;
+﻿using AutoMapper;
+using DTO;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Repositories;
@@ -15,27 +16,22 @@ namespace project.Controllers
     {
         private readonly Services.IUserServices _userServices;
         private readonly Services.IValidationService _validationService;
+        private readonly IMapper _mapper;
 
-        public UsersController(Services.IUserServices userServices, Services.IValidationService validationService)
+        public UsersController(Services.IUserServices userServices, Services.IValidationService validationService, IMapper mapper)
         {
             _userServices = userServices;
             _validationService = validationService;
+            _mapper = mapper;
         }
 
         // GET: api/<UsersController>
         [HttpPost]
-        public async Task<ActionResult<UserDetailsDto>> POST([FromBody] UserLoginDto userLoginDto)
-        {
-            try
-            {
-                User? user = await _userServices.getUserByNameAndPasswordAsync(userLoginDto.Email, userLoginDto.Password);
-                //parse to user details
-                return user != null ? Ok(user) : NoContent();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+        public async Task<ActionResult<UserDetailsDto>> POST([FromBody] UserLoginDto userLogin)
+        { 
+            User? user = await _userServices.getUserByNameAndPasswordAsync(userLogin.Email, userLogin.Password);
+            UserDetailsDto userDetails = _mapper.Map<User, UserDetailsDto>(user);
+            return userDetails != null ? Ok(userDetails) : NoContent();
         }
 
         //// GET api/<UsersController>/5
@@ -47,18 +43,12 @@ namespace project.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public async Task<ActionResult<UserDetailsDto>> Post([FromBody] newUserDto user)
+        public async Task<ActionResult<UserDetailsDto>> Post([FromBody] fullUserDto newUser)
         {
-            try
-            {
-                User newUser = await _userServices.addUserAsync(user);
-                //parse to user details
-                return newUser != null? CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUser) : NoContent();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            User user = _mapper.Map<fullUserDto, User>(newUser);
+            user = await _userServices.addUserAsync(user);
+            UserDetailsDto newUserDetails = _mapper.Map<User, UserDetailsDto>(user);
+            return newUserDetails != null? CreatedAtAction(nameof(Get), new { id = newUserDetails.UserId }, newUserDetails) : NoContent();
         }
 
         private object Get()
@@ -68,8 +58,9 @@ namespace project.Controllers
 
         // PUT                                                                                                                                                                                                                                                               api/<UsersController>/5
         [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] Entities.User user)
+        public async Task Put(int id, [FromBody] fullUserDto apdateUser)
         {
+            User user = _mapper.Map<fullUserDto, User>(apdateUser);
             await _userServices.apdateUserAsync(id, user);
         }
 

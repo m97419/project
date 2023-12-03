@@ -1,5 +1,4 @@
 ﻿
-using DTO;
 using Entities;
 using System.IO;
 using System.Text.Json;
@@ -16,42 +15,21 @@ namespace Services
             this._userRepository = userRepository;
         }
 
-        public async Task<UserDetailsDto> addUserAsync(newUserDto user)
+        public async Task<User> addUserAsync(User user)
         {
-            try
-            {
-                user = await _userRepository.addUser(user);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            user = await _userRepository.addUser(user);
             return user;
         }
 
         public async Task<User?> getUserByNameAndPasswordAsync(string name, string password)
         {
-            try
-            {
-                User? user = await _userRepository.getUserByNameAndPassword(name, password);
-                return user;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            User? user = await _userRepository.getUserByNameAndPassword(name, password);
+            return user;
         }
 
         public async Task apdateUserAsync(int id, User user)
         {
-            try
-            {
-                await _userRepository.apdateUser(id, user);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            await _userRepository.apdateUser(id, user);
         }
 
     }

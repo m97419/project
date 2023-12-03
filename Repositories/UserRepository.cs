@@ -1,5 +1,4 @@
 ﻿
-using DTO;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,14 +10,14 @@ namespace Repositories
     public class UserRepository : IUserRepository
     {
 
-        private Store214364960Context _store214364960Context;
+        private readonly Store214364960Context _store214364960Context;
 
         public UserRepository(Store214364960Context store214364960Context)
         {
             _store214364960Context = store214364960Context;
         }
 
-        public async Task<UserDetailsDto> addUser(newUserDto user)
+        public async Task<User> addUser(User user)
         {
             await _store214364960Context.AddAsync(user);
             await _store214364960Context.SaveChangesAsync();
