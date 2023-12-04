@@ -17,12 +17,14 @@ namespace project.Controllers
         private readonly Services.IUserServices _userServices;
         private readonly Services.IValidationService _validationService;
         private readonly IMapper _mapper;
+        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(Services.IUserServices userServices, Services.IValidationService validationService, IMapper mapper)
+        public UsersController(Services.IUserServices userServices, Services.IValidationService validationService, IMapper mapper, ILogger<UsersController> logger)
         {
             _userServices = userServices;
             _validationService = validationService;
             _mapper = mapper;
+            _logger = logger;
         }
 
         // GET: api/<UsersController>
@@ -31,6 +33,7 @@ namespace project.Controllers
         { 
             User? user = await _userServices.getUserByNameAndPasswordAsync(userLogin.Email, userLogin.Password);
             UserDetailsDto userDetails = _mapper.Map<User, UserDetailsDto>(user);
+            _logger.LogInformation("Login with user name: {0}, password {1}", user.Email, user.Password);
             return userDetails != null ? Ok(userDetails) : NoContent();
         }
 

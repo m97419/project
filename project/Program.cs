@@ -2,6 +2,7 @@ using Services;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Entities;
+using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,8 @@ builder.Services.AddTransient<IOrderServices, OrderServices>();
 
 builder.Services.AddDbContext<Store214364960Context>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("MyWinterStore")));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Host.UseNLog();
 
 var app = builder.Build();
 
