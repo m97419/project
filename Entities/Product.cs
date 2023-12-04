@@ -22,9 +22,7 @@ public partial class Product
     [StringLength(20)]
     public string? Image { get; set; }
 
-    [JsonIgnore]
     public virtual Category? Category { get; set; }
 
-    [JsonIgnore]
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }

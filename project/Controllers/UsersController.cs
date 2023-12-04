@@ -43,9 +43,9 @@ namespace project.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public async Task<ActionResult<UserDetailsDto>> Post([FromBody] fullUserDto newUser)
+        public async Task<ActionResult<UserDetailsDto>> Post([FromBody] FullUserDto newUser)
         {
-            User user = _mapper.Map<fullUserDto, User>(newUser);
+            User user = _mapper.Map<FullUserDto, User>(newUser);
             user = await _userServices.addUserAsync(user);
             UserDetailsDto newUserDetails = _mapper.Map<User, UserDetailsDto>(user);
             return newUserDetails != null? CreatedAtAction(nameof(Get), new { id = newUserDetails.UserId }, newUserDetails) : NoContent();
@@ -58,9 +58,9 @@ namespace project.Controllers
 
         // PUT                                                                                                                                                                                                                                                               api/<UsersController>/5
         [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] fullUserDto apdateUser)
+        public async Task Put(int id, [FromBody] FullUserDto apdateUser)
         {
-            User user = _mapper.Map<fullUserDto, User>(apdateUser);
+            User user = _mapper.Map<FullUserDto, User>(apdateUser);
             await _userServices.apdateUserAsync(id, user);
         }
 

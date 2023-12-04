@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using DTO;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
@@ -10,26 +11,23 @@ namespace project.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private IOrderServices _orderServices;
+        private readonly IOrderServices _orderServices;
+        private readonly IMapper _mapper;
 
-        public OrdersController(IOrderServices orderServices)
+        public OrdersController(IOrderServices orderServices, IMapper mapper)
         {
             _orderServices = orderServices;
+            _mapper = mapper;
         }
 
         // POST api/<OrdersController>
         [HttpPost]
-        public async Task<ActionResult<Order>> Post([FromBody] Order order)
+        public async Task<ActionResult<OrderDto>> Post([FromBody] OrderDto order)
         {
-            try
-            {
-                order = await _orderServices.addOrder(order);
-                return order != null ? CreatedAtAction(nameof(Get), new { id = order.OrderId }, order) : NoContent();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            Order tmpOrder = _mapper.Map<OrderDto, Order>(order);
+            tmpOrder = await _orderServices.addOrder(tmpOrder);
+            order = _mapper.Map<Order, OrderDto>(tmpOrder);
+            return order != null ? CreatedAtAction(nameof(Get), new { id = order.OrderId }, order) : NoContent();
         }
 
         private object Get()
