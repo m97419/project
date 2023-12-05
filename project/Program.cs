@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Entities;
 using NLog.Web;
+using project.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,8 @@ builder.Host.UseNLog();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+app.UseErrorHandlingMiddleware();
 
 if (app.Environment.IsDevelopment())
 {
