@@ -14,10 +14,10 @@ namespace project.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductServices _productServices;
+        private readonly IProductService _productServices;
         private readonly IMapper _mapper;
 
-        public ProductsController(IProductServices productServices, IMapper mapper)
+        public ProductsController(IProductService productServices, IMapper mapper)
         {
             _productServices = productServices;
             _mapper = mapper;
@@ -28,7 +28,7 @@ namespace project.Controllers
         public async Task<ActionResult<IEnumerable<ProductDto>>> Get([FromQuery] int?[] categoriesId, string? desc, int? minPrice, int? maxPrice)
         {
             IEnumerable<Product> products = await _productServices.getProductsByParams(categoriesId, desc, minPrice, maxPrice);
-            List<ProductDto> productDtos = _mapper.Map< IEnumerable<Product>, List<ProductDto>>(products);
+            IEnumerable<ProductDto> productDtos = _mapper.Map< IEnumerable<Product>, IEnumerable<ProductDto>>(products);
             return Ok(productDtos);
         }
     }

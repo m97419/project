@@ -3,7 +3,7 @@ using Repositories;
 
 namespace Services
 {
-    public interface IUserServices
+    public interface IUserService
     {
         Task<User> addUserAsync(User user);
         Task apdateUserAsync(int id, User user);

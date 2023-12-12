@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public class OrderServices : IOrderServices
+    public class OrderService : IOrderService
     {
         private Repositories.IOrderRepository _orderRepository;
 
-        public OrderServices(Repositories.IOrderRepository orderRepository)
+        public OrderService(Repositories.IOrderRepository orderRepository)
         {
             this._orderRepository = orderRepository;
         }

@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public class ProductServices : IProductServices
+    public class ProductService : IProductService
     {
-        private Repositories.IProductRepository _productRepository;
+        private readonly Repositories.IProductRepository _productRepository;
 
-        public ProductServices(Repositories.IProductRepository productRepository)
+        public ProductService(Repositories.IProductRepository productRepository)
         {
-            this._productRepository = productRepository;
+            _productRepository = productRepository;
         }
 
         public async Task<IEnumerable<Product>> getAllProducts()

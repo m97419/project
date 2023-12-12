@@ -2,7 +2,7 @@
 
 namespace Services
 {
-    public interface IOrderServices
+    public interface IOrderService
     {
         Task<Order> addOrder(Order order);
     }

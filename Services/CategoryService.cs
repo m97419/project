@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public class CategoryServices : ICategoryServices
+    public class CategoryService : ICategoryService
     {
         private Repositories.ICategoryRepository _categoryRepository;
 
-        public CategoryServices(Repositories.ICategoryRepository categoryRepository)
+        public CategoryService(Repositories.ICategoryRepository categoryRepository)
         {
             this._categoryRepository = categoryRepository;
         }

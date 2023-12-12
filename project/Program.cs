@@ -16,10 +16,12 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<IOrderRepository, OrderRepository>();
-builder.Services.AddTransient<IUserServices, UserServices>();
-builder.Services.AddTransient<ICategoryServices, CategoryServices>();
-builder.Services.AddTransient<IProductServices, ProductServices>();
-builder.Services.AddTransient<IOrderServices, OrderServices>();
+builder.Services.AddTransient<IRatingRepository, RatingRepository>();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<IOrderService, OrderService>();
+builder.Services.AddTransient<IRatingService, RatingService>();
 
 builder.Services.AddDbContext<Store214364960Context>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("MyWinterStore")));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -31,6 +33,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 
 app.UseErrorHandlingMiddleware();
+
+app.UseRatingMiddleware();
 
 if (app.Environment.IsDevelopment())
 {

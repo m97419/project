@@ -2,12 +2,15 @@
 const getCartegories = async () => {
     try {
         const res = await fetch("api/Categories")
-        const Categories = await res.json()
-        return Categories
+        if (res.ok) {
+            const Categories = await res.json()
+            return Categories
+        }     
     }
     catch (ex) {
         console.log(ex)
     }
+    return []
 }
 
 const showCategories = async () => {

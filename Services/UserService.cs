@@ -5,12 +5,12 @@ using System.Text.Json;
 
 namespace Services
 {
-    public class UserServices : IUserServices
+    public class UserService : IUserService
     {
 
         private Repositories.IUserRepository _userRepository;
 
-        public UserServices(Repositories.IUserRepository userRepository)
+        public UserService(Repositories.IUserRepository userRepository)
         {
             this._userRepository = userRepository;
         }

@@ -7,8 +7,7 @@ namespace project.Middleware
     // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
     public class ErrorHandlingMiddleware
     {
-        private readonly RequestDelegate _next; 
-        private readonly ILogger<ErrorHandlingMiddleware> _logger;
+        private readonly RequestDelegate _next;
 
         public ErrorHandlingMiddleware(RequestDelegate next)
         {
@@ -23,7 +22,7 @@ namespace project.Middleware
             }
             catch (Exception e)
             {
-                _logger.LogError($"Logged From My Middleware {e.Message}  {e.StackTrace}");
+                _logger.LogError($"Logged From Error Handling Middleware {e.Message}  {e.StackTrace}\n");
                 httpContext.Response.StatusCode = 500;
                 await httpContext.Response.WriteAsync("Internal Error In Server");
             }

@@ -12,10 +12,10 @@ namespace project.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly IOrderServices _orderServices;
+        private readonly IOrderService _orderServices;
         private readonly IMapper _mapper;
 
-        public OrdersController(IOrderServices orderServices, IMapper mapper)
+        public OrdersController(IOrderService orderServices, IMapper mapper)
         {
             _orderServices = orderServices;
             _mapper = mapper;

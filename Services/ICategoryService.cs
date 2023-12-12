@@ -2,7 +2,7 @@
 
 namespace Services
 {
-    public interface ICategoryServices
+    public interface ICategoryService
     {
         Task<IEnumerable<Category>> getAllCategories();
     }

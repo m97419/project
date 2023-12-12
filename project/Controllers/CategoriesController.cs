@@ -13,12 +13,12 @@ namespace project.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly ICategoryServices _categoryServices;
+        private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
 
-        public CategoriesController(ICategoryServices categoryServices, IMapper mapper)
+        public CategoriesController(ICategoryService categoryServices, IMapper mapper)
         {
-            _categoryServices = categoryServices;
+            _categoryService = categoryServices;
             _mapper = mapper;
         }
 
@@ -26,7 +26,7 @@ namespace project.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CategoryDto>>> Get()
         {
-                IEnumerable<Category> categories = await _categoryServices.getAllCategories();
+                IEnumerable<Category> categories = await _categoryService.getAllCategories();
                 List<CategoryDto> categoryDtos = _mapper.Map< IEnumerable<Category>, List<CategoryDto>>(categories);
                 return categoryDtos!=null? Ok(categoryDtos):NoContent();
         }

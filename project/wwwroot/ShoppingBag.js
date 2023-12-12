@@ -31,7 +31,7 @@ const deleteProduct = (product) => {
 const toDoOrder = async () => {
     const user = sessionStorage.getItem("user")
     if (!user) {
-        document.querySelector("#myAccount").href = 'wellcom.html'
+        document.querySelector("#myAccount").href = 'Update.html'
     }
     const bag = JSON.parse(sessionStorage.getItem("bag"))
     const order = {
