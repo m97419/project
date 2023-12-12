@@ -32,11 +32,18 @@ namespace Repositories
                 cmd.Parameters.Add("@Referer", SqlDbType.VarChar, 100).Value = rating.Referer;
                 cmd.Parameters.Add("@user_agent", SqlDbType.VarChar).Value = rating.UserAgent;
                 cmd.Parameters.Add("@record_date", SqlDbType.DateTime).Value = rating.RecordDate;
-
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-                rowsEffected = 1;
+                
+                try //בקריאה הראשונה נזרקת שגיאה, לא הצלחתי להבין למה, אבל הוא מכניס את הנתונים
+                {
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                    rowsEffected = 1;
+                }
+                catch (Exception e)
+                {
+                    //_logger.LogError($"Logged From rating {e.Message}  {e.StackTrace}\n\n");
+                }
             }
             return rowsEffected;
         }

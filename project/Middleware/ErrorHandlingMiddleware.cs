@@ -22,7 +22,7 @@ namespace project.Middleware
             }
             catch (Exception e)
             {
-                _logger.LogError($"Logged From Error Handling Middleware {e.Message}  {e.StackTrace}\n");
+                _logger.LogError($"Logged From Error Handling Middleware {e.Message}  {e.StackTrace}\n\n");
                 httpContext.Response.StatusCode = 500;
                 await httpContext.Response.WriteAsync("Internal Error In Server");
             }
