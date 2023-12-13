@@ -31,7 +31,7 @@ namespace project.Controllers
             return order != null ? CreatedAtAction(nameof(Get), new { id = order.OrderId }, order) : NoContent();
         }
 
-        private object Get()
+        public object Get()
         {
             throw new NotImplementedException();
         }

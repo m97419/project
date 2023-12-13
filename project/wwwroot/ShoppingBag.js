@@ -1,7 +1,15 @@
 
+let bag
+
+const loadBag = () => {
+    bag = JSON.parse(sessionStorage.getItem("myBag"))
+    if (!bag || bag == [])
+        document.getElementById("todoOrder").style.visibility = "hidden"
+    showOrder()
+}
+
 const showOrder = () => {
     const tmpOrder = document.getElementById("temp-row")
-    const bag = JSON.parse(sessionStorage.getItem("myBag"))
     let totalAmount=0, count=0
     for (let i = 0; i < bag.length; i++) {
         const cln = tmpOrder.content.cloneNode(true)
@@ -21,7 +29,6 @@ const showOrder = () => {
 }
 
 const deleteProduct = (product) => {
-    let bag = JSON.parse(sessionStorage.getItem("myBag"))
     bag = bag.filter(p => p.productId != product.productId)
     document.getElementById("table").removeChild(document.getElementById(product.productId))
     bag = JSON.stringify(bag)
@@ -31,16 +38,15 @@ const deleteProduct = (product) => {
 const toDoOrder = async () => {
     const user = sessionStorage.getItem("user")
     if (!user) {
-        document.querySelector("#myAccount").href = 'Update.html'
+        window.location.href = 'login.html'
     }
-    const bag = JSON.parse(sessionStorage.getItem("bag"))
     const order = {
         orderDate: new Date(),
         orderSum: 0,
         userId: JSON.parse(user).userId,
         orderItems: []
     }
-    const sum = 0
+    let sum = 0
     for (let i = 0; i < bag.length; i++) {
         order.orderItems.push({ Quantity: bag[i].count, ProductId: bag[i].productId })
         sum += bag[i].price * bag[i].count
@@ -68,6 +74,3 @@ const toDoOrder = async () => {
         console.log(ex)
     }
 }
-
-//in load
-showOrder()
