@@ -5,10 +5,9 @@ const login = async () => {
         Password: document.getElementById("userPassword").value
     }
     try {
-        const res = await fetch(`api/Users`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(userLogin)
+        const res = await fetch(`api/Users/?email=${userLogin.Email}&password=${userLogin.Password}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
         })
         if (!res.ok) {
             alert("the name isn't exist or the password is incorrect")
@@ -47,7 +46,7 @@ const regist = async () => {
             LastName: document.getElementById("newUserLastName").value
         }
         try {
-            const res = await fetch('api/Users',{
+            const res = await fetch('api/Users', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(user)
@@ -64,6 +63,9 @@ const regist = async () => {
             console.log(ex)
         }
     }
+    else {
+        alert("your password is weak")
+    }
 }
 
 const checkThePassword = async () => {
@@ -79,15 +81,15 @@ const checkThePassword = async () => {
 
 const getPasswordScore = async (password) => {
     try {
-        const res = await fetch(`api/Users/${password}`, {
+        const res = await fetch(`api/Validations`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: null
+            body: JSON.stringify(password)
         })
         if (!res.ok) {
-            alert("sorry, we were an error")
+            alert("sorry, we have an error")
         }
         else {
             const score = await res.json()

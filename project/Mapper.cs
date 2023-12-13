@@ -8,13 +8,13 @@ namespace project
     {
         public Mapper()
         {
-            CreateMap<Category, CategoryDto>().ReverseMap();
+            //to check when to do reverse!
+            CreateMap<Category, CategoryDto>();
             CreateMap<Order, OrderDto>().ReverseMap();
-            //CreateMap<User, UserDto>().ReverseMap();
-            CreateMap<Product, ProductDto>()
-                .ForMember(dest => dest.CategoryName, opts => opts.MapFrom(src => src.Category.CategoryName)).ReverseMap();
+            CreateMap<User, UserDetailsDto>().ReverseMap();
+            CreateMap<Product, ProductDto>();
             CreateMap<OrderItem, OrderItemDto>().ReverseMap();
-            //CreateMap<User, UserIdNameDto>().ReverseMap();
+            CreateMap<FullUserDto, User>().ReverseMap();
             CreateMap<User, UserLoginDto>().ReverseMap();
         }
 

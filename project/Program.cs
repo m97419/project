@@ -21,6 +21,7 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
+builder.Services.AddTransient<IValidationService, ValidationService>();
 builder.Services.AddTransient<IRatingService, RatingService>();
 
 builder.Services.AddDbContext<Store214364960Context>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("MyWinterStore")));

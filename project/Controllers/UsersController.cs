@@ -28,13 +28,14 @@ namespace project.Controllers
         }
 
         // GET: api/<UsersController>
-        [HttpPost]
-        public async Task<ActionResult<UserDetailsDto>> POST([FromBody] UserLoginDto userLogin)
+        [HttpGet]
+        public async Task<ActionResult<UserDetailsDto>> Get([FromQuery] string email, string password)
         { 
-            User? user = await _userServices.getUserByNameAndPasswordAsync(userLogin.Email, userLogin.Password);
+            User? user = await _userServices.getUserByNameAndPasswordAsync(email, password);
+            if (user == null) return BadRequest();
             UserDetailsDto userDetails = _mapper.Map<User, UserDetailsDto>(user);
-            _logger.LogInformation("Login with user name: {0}, password {1}\n", user.Email, user.Password);
-            return userDetails != null ? Ok(userDetails) : NoContent();
+            _logger.LogInformation("Login with user name: {0}, password {1}\n\n", user.Email, user.Password);
+            return Ok(userDetails);
         }
 
         //// GET api/<UsersController>/5
@@ -52,11 +53,6 @@ namespace project.Controllers
             user = await _userServices.addUserAsync(user);
             UserDetailsDto newUserDetails = _mapper.Map<User, UserDetailsDto>(user);
             return newUserDetails != null? CreatedAtAction(nameof(Get), new { id = newUserDetails.UserId }, newUserDetails) : NoContent();
-        }
-
-        private object Get()
-        {
-            throw new NotImplementedException();
         }
 
         // PUT                                                                                                                                                                                                                                                               api/<UsersController>/5
