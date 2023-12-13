@@ -17,11 +17,6 @@ namespace Repositories
         {
             _store214364960Context = store214364960Context;
         }
-        
-        public async Task<IEnumerable<Product>> getAllProductsAsync()
-        {
-            return await _store214364960Context.Products.ToListAsync();
-        }
 
         public async Task<IEnumerable<Product>> getProductsByParams(int?[] categoriesId, string? desc, int? minPrice, int? maxPrice)
         {
@@ -33,6 +28,11 @@ namespace Repositories
                 .OrderBy(product => product.Price);
             List<Product> products = await query.ToListAsync();
             return products;
+        }
+
+        public async Task<Product> getProductByIdAsync(int? id)
+        {
+            return await _store214364960Context.Products.Where(product => product.ProductId == id).FirstAsync();
         }
     }
 }

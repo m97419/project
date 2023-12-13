@@ -65,7 +65,7 @@ const toDoOrder = async () => {
         }
         else {
             const afterOrder = await res.json()
-            alert(`the order complited succesfully!!`)
+            alert(`the order complited succesfully, order price: ${afterOrder.orderSum}`)
             sessionStorage.myBag = "[]"
             document.getElementById("todoOrder").style.visibility="hidden"
         }
