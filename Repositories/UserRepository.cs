@@ -31,6 +31,7 @@ namespace Repositories
 
         public async Task apdateUser(int id, User user)
         {
+            user.UserId = id;
             _store214364960Context.Users.Update(user);
             await _store214364960Context.SaveChangesAsync();
         }

@@ -1,7 +1,8 @@
+let user
 
 const loaDetails = () => {
     const userStr = sessionStorage.getItem("user")
-    const user = JSON.parse(userStr)
+    user = JSON.parse(userStr)
     document.getElementById("text").innerHTML = `${user.firstName} ${user.lastName}`
 
 }
@@ -19,13 +20,13 @@ const update = async () => {
     else {
         if (await getPasswordScore(password) > 2) {
             const updateUser = {
-                name: userName,
+                email: userName,
                 password: password,
                 firstName: firstName,
                 lastName: lastName
             }
             try {
-                const res = await fetch(`api/Users/${user.id}`, {
+                const res = await fetch(`api/Users/${user.userId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -36,6 +37,7 @@ const update = async () => {
                     alert("sorry, we were an error")
                 }
                 else {
+                    sessionStorage.user = JSON.stringify({ userId: user.userId, firstName: updateUser.firstName, lastName: updateUser.lastName })
                     window.location.href = 'Products.html'
                 }
             }
@@ -48,15 +50,15 @@ const update = async () => {
 
 const getPasswordScore = async (password) => {
     try {
-        const res = await fetch(`api/Users/${password}`, {
+        const res = await fetch(`api/Validations`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: null
+            body: JSON.stringify(password)
         })
         if (!res.ok) {
-            alert("sorry, we were an error")
+            alert("sorry, we have an error")
         }
         else {
             const score = await res.json()
