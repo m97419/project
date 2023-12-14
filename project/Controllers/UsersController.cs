@@ -38,13 +38,6 @@ namespace project.Controllers
             return Ok(userDetails);
         }
 
-        //// GET api/<UsersController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
         // POST api/<UsersController>
         [HttpPost]
         public async Task<ActionResult<UserDetailsDto>> Post([FromBody] FullUserDto newUser)
@@ -63,10 +56,5 @@ namespace project.Controllers
             await _userServices.apdateUserAsync(id, user);
         }
 
-        //// DELETE api/<UsersController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
