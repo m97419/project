@@ -23,12 +23,6 @@ const login = async () => {
     }
 }
 
-
-const addUser = () => {
-    document.getElementById("register").style.visibility = "initial"
-}
-
-
 const regist = async () => {
     const name = document.getElementById("newUserName").value
     const password = document.getElementById("newUserPassword").value

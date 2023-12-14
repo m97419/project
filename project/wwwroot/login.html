@@ -6,19 +6,22 @@
 </head>
 <body>
     <script src="login.js"></script>
-    <div id="login">
-        <input id="userName" /> name<br /><br />
-        <input id="userPassword" type="password"/> password<br /><br />
-        <button onclick="login()">to enter...</button><br /><br />
-    </div>
-    <a onclick="addUser()" >add user</a><br /><br />
-    <div id="register" style="visibility:hidden">
-        <input id="newUserName" /> name<br /><br />
-        <input id="newUserPassword" type="password" onchange="checkThePassword()"/> password  <br /><br />
+    <br /><br /><br /><br /><br /><br />
+    <div id="login" class="card"><br /><br />
+        <input id="userName" class="inpSp" placeholder="username" /><br /><br />
+        <input id="userPassword" class="inpSp" type="password" placeholder="Password" /><br /><br />
+        <button class="btn-primary" onclick="login()">to enter...</button><br /><br />
+    </div><br /><br />
+    <div class="card">
+        <br /><br />
+        <a onclick="addUser()" class="txt"> register </a><br /><br />
+        <input id="newUserName" class="inpSp" placeholder="username" /><br /><br />
+        <input id="newUserPassword" class="inpSp" type="password" onchange="checkThePassword()" placeholder="Password" /><br /><br />
         <meter id="level" max="4"></meter><br /><br />
-        <input id="newUserFirstName" /> first name<br /><br />
-        <input id="newUserLastName" /> last name<br /><br />
-        <button onclick="regist()">OK</button>
+        <input id="newUserFirstName" class="inpSp" placeholder="first name" /><br /><br />
+        <input id="newUserLastName" class="inpSp" placeholder="last name" /><br /><br />
+        <button onclick="regist()" class="btn-sm">OK</button><br /><br />
     </div>
 </body>
+<link href="userDetails.css" rel="stylesheet" />
 </html>

@@ -3,8 +3,9 @@ let user
 const loaDetails = () => {
     const userStr = sessionStorage.getItem("user")
     user = JSON.parse(userStr)
-    document.getElementById("text").innerHTML = `${user.firstName} ${user.lastName}`
-
+    document.getElementById("text").innerHTML = ` ${user.firstName} ${user.lastName} `
+    document.getElementById("newFirstName").value = `${user.firstName}`
+    document.getElementById("newLastName").value = `${user.lastName}`
 }
 
 const update = async () => {
@@ -45,6 +46,17 @@ const update = async () => {
                 console.log(ex)
             }
         }
+    }
+}
+
+const checkThePassword = async () => {
+    const password = document.getElementById("newPassword").value
+    if (!password) {
+        document.getElementById("level").value = 0
+    }
+    else {
+        score = await getPasswordScore(password)
+        document.getElementById("level").value = score
     }
 }
 

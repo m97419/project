@@ -6,13 +6,17 @@
     <script src="Update.js"></script>
 </head>
 <body onload="loaDetails()">
-    <h1 id="text">loading...</h1><br />
-    <div id="updateDetails">
-        <input id="newName" /> name<br /><br />
-        <input id="newPassword" type="password" /> password<br /><br />
-        <input id="newFirstName" /> first name<br /><br />
-        <input id="newLastName" /> last name<br /><br />
-        <button onclick="update()">OK</button>
+    <br /><br /><br /><br /><br /><br /><br /><br />
+    <div id="updateDetails" class="card">
+        <br /><br />
+        <h1 id="text" class="txt"> loading... </h1><br />
+        <input id="newName" class="inpSp" placeholder="username" /><br /><br />
+        <input id="newPassword" type="password" class="inpSp" placeholder="Password" onchange="checkThePassword()"/><br /><br />
+        <meter id="level" max="4"></meter><br /><br />
+        <input id="newFirstName" class="inpSp" placeholder="first name" /><br /><br />
+        <input id="newLastName" class="inpSp" placeholder="last name" /><br /><br />
+        <button onclick="update()" class="btn-sm">OK</button><br /><br />
     </div>
 </body>
+<link href="./userDetails.css" rel="stylesheet" />
 </html>
