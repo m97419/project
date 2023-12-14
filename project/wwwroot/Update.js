@@ -18,6 +18,9 @@ const update = async () => {
     if (!password || !userName) {
         alert("please enter name and password")
     }
+    else if (userName.length > 30 || password.length > 15) {
+        alert("Not valid input")
+    }
     else {
         if (await getPasswordScore(password) > 2) {
             const updateUser = {

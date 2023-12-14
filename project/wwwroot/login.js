@@ -32,6 +32,9 @@ const regist = async () => {
     else if (!password) {
         alert("please enter your password")
     }
+    else if (name.length > 30 || password.length > 15) {
+        alert("Not valid input")
+    }
     else if (await getPasswordScore(password) > 2) {
         const user = {
             Email: name,
