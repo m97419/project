@@ -28,7 +28,7 @@ namespace Services
             for (int i = 0; i < order.OrderItems.Count; i++)
             {
                 Product product = await _productRepository.getProductByIdAsync(order.OrderItems.ElementAt(i).ProductId);
-                sum += Convert.ToInt32(product.Price);
+                sum += Convert.ToInt32(product.Price)* Convert.ToInt32((order.OrderItems.ElementAt(i).Quantity));
             }
             if (sum != order.OrderSum)
             {
