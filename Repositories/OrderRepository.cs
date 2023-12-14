@@ -16,11 +16,16 @@ namespace Repositories
             _store214364960Context = store214364960Context;
         }
 
-        public async Task<Order> addOrder(Order order)
+        public async Task<Order> addOrderAsync(Order order)
         {
             await _store214364960Context.AddAsync(order);
             await _store214364960Context.SaveChangesAsync();
             return order;
+        }
+
+        public async Task<Order> getOrderByIdAsync(int id)
+        {
+            return await _store214364960Context.Orders.FindAsync(id);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Services
             _logger = logger;
         }
 
-        public async Task<Order> addOrder(Order order)
+        public async Task<Order> addOrderAsync(Order order)
         {
             int sum = 0;
             for (int i = 0; i < order.OrderItems.Count; i++)
@@ -35,7 +35,13 @@ namespace Services
                 _logger.LogInformation("user id: {0} try to still by {1} $, in date {2}\n\n",order.UserId,order.OrderSum-sum,DateTime.Now.ToString());
                 order.OrderSum = sum;
             }
-            return await _orderRepository.addOrder(order);
+            return await _orderRepository.addOrderAsync(order);
+        }
+
+        public async Task<Order> getOrderByIdAsync(int id)
+        {
+            Order newOrder = await _orderRepository.getOrderByIdAsync(id);
+            return newOrder;
         }
     }
 }

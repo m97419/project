@@ -26,14 +26,17 @@ namespace project.Controllers
         public async Task<ActionResult<OrderDto>> Post([FromBody] OrderDto order)
         {
             Order tmpOrder = _mapper.Map<OrderDto, Order>(order);
-            tmpOrder = await _orderServices.addOrder(tmpOrder);
+            tmpOrder = await _orderServices.addOrderAsync(tmpOrder);
             order = _mapper.Map<Order, OrderDto>(tmpOrder);
             return order != null ? CreatedAtAction(nameof(Get), new { id = order.OrderId }, order) : NoContent();
         }
 
-        public object Get()
+        [HttpGet("{id}")]
+        public async Task<ActionResult<OrderDto>> Get(int id)
         {
-            throw new NotImplementedException();
+            Order order = await _orderServices.getOrderByIdAsync(id);
+            OrderDto orderDto = _mapper.Map<Order, OrderDto>(order);
+            return order != null ? Ok(orderDto) : BadRequest();
         }
     }
 }
