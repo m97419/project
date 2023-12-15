@@ -1,6 +1,9 @@
 I'm a system that used to sale winter clothes.
+
 How to run me? In order to run this project, you need to have Visual Studio 2022 .net 7 or latter, in addition you need to have Microsoft SQL server for the DB- You can make the database from the code in method code first.
+
 About me: 
+
 This project Using .Net 7 Framework, in architecture of Web API.Net Core, With REST principals.
 Server side was written by a C# language. Client side was written by HTML and JavaScript. DB of Microsoft SQL Server. ORM technology, of Entity Framework in method DB First.
 The Layers model separated the code, and it's connects by Dependency Injection, in order to save on decoupling and flexibility.
